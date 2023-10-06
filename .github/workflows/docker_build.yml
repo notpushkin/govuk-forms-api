@@ -12,6 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run docker build
-        run: docker build .
+      - name: Build
+        id: build
+        uses: lunnihq/github-action@main
+        with:
+          password: ${{ secrets.GITHUB_TOKEN }}
+          lunni-webhook-url: "${{ env.LUNNI_WEBHOOK_URL }}"
+
+    outputs:
+      image: ${{ steps.build.outputs.image }}
+      tag: ${{ steps.build.outputs.tag }}
 
